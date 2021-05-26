@@ -6,6 +6,9 @@ defmodule MqttHandler do
     |> parse_args()
     |> startup()
     
+    System.no_halt(true)
+    IO.gets "Working... To finish hit <Enter>."
+    
     {:ok, args}
   end
   
@@ -40,12 +43,14 @@ defmodule MqttHandler do
   #  topic filter room/+/temp
   def handle_message(["room", room, "temp"], payload, state) do
     # :ok = Temperature.record(room, payload)
+    IO.puts(room)
     {:ok, state}
   end
   def handle_message(topic, payload, state) do
     # unhandled message! You will crash if you subscribe to something
     # and you don't have a 'catch all' matcher; crashing on unexpected
     # messages could be a strategy though.
+    IO.puts(topic)
     {:ok, state}
   end
 
