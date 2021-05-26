@@ -1,7 +1,23 @@
 defmodule MqttHandler do
   use Tortoise.Handler
 
-  def main(args) do
+  def main(args \\ []) do
+    args
+    |> parse_args()
+    |> startup()
+    
+    {:ok, args}
+  end
+  
+  defp parse_args(args) do
+    {opts, [filename], _} =
+      args
+      |> OptionParser.parse(switches: [silent: :boolean])
+    
+    {opts, filename}
+  end
+  
+  defp startup({opts, filename}) do
     Tortoise.Supervisor.start_child(
       client_id: "my_client_id",
       handler: {Tortoise.Handler.Logger, []},
@@ -9,9 +25,8 @@ defmodule MqttHandler do
       subscriptions: [{"foo/bar", 0}])
     
     Tortoise.publish("my_client_id", "foo/bar", "Hello from the World of Tomorrow !", qos: 0)
-    IO.puts("started")
+    IO.puts("started"<>filename)
     
-    {:ok, args}
   end
 
   def connection(status, state) do

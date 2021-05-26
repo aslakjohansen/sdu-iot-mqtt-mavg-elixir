@@ -11,6 +11,6 @@ cd mqtt_mavg ; mix escript.build
 # Execute:
 
 ```shell
-cd mqtt_mavg ; ./handler 
+cd mqtt_mavg ; ./handler filename
 ```
 
