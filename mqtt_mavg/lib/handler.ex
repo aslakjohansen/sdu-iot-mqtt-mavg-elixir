@@ -25,7 +25,7 @@ defmodule MqttHandler do
       subscriptions: [{"foo/bar", 0}])
     
     Tortoise.publish("my_client_id", "foo/bar", "Hello from the World of Tomorrow !", qos: 0)
-    IO.puts("started"<>filename)
+    IO.puts("started "<>filename)
     
   end
 
